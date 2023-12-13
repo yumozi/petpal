@@ -1,0 +1,10 @@
+django
+Pillow
+djangorestframework
+djangorestframework-simplejwt
+django-phonenumber-field[phonenumberslite]
+drf-nested-routers
+django-extensions
+django-filter
+shortuuid
+django-cors-headers

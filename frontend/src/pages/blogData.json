@@ -1,0 +1,28 @@
+{
+    "count": 3,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "id": 3,
+            "title": "My third",
+            "content": "I love blogs. This is my thirdblog.",
+            "date_posted": "2023-12-09T00:14:29.213892Z",
+            "shelter": 1
+        },
+        {
+            "id": 2,
+            "title": "My first blog!",
+            "content": "I love blogs. This is my first blog.",
+            "date_posted": "2023-12-08T23:58:45.799523Z",
+            "shelter": 1
+        },
+        {
+            "id": 1,
+            "title": "My first blog!",
+            "content": "I love blogs. This is my first blog.",
+            "date_posted": "2023-12-08T22:35:39.104079Z",
+            "shelter": 1
+        }
+    ]
+}
