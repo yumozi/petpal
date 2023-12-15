@@ -14,7 +14,7 @@ function BlogForm({ shelterId }) {
     e.preventDefault();
   
     try {
-      const apiUrl = `http://127.0.0.1:8000/api/shelters/${shelterId}/create-blog/`;
+      const apiUrl = `${process.env.REACT_APP_SERVER}/api/shelters/${shelterId}/create-blog/`;
   
       const response = await fetch(apiUrl, {
         method: 'POST',
