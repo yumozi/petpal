@@ -15,7 +15,6 @@ class BlogListView(generics.ListAPIView):
     permission_classes = [AllowAny]
 
 class BlogDetailView(APIView):
-    permission_classes = [IsAuthenticated]
 
     def get(self, request, id):
         blog_post = get_object_or_404(BlogPost, id=id)

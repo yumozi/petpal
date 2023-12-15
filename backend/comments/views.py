@@ -10,6 +10,7 @@ from rest_framework import generics
 from django.shortcuts import get_object_or_404
 from django.contrib.contenttypes.models import ContentType
 from accounts.models import ShelterProfile
+from blogs.models import BlogPost
 
 
 class ApplicationCommentCreateView(APIView):
@@ -63,7 +64,6 @@ class StandardResultsSetPagination(PageNumberPagination):
 
 
 class ShelterCommentListView(APIView):
-    permission_classes = [IsAuthenticated]
     pagination_class = StandardResultsSetPagination()
 
     def get(self, request, shelter_id):
@@ -82,7 +82,6 @@ class ShelterCommentListView(APIView):
         return Response(serializer.data)
     
 class ApplicationCommentListView(APIView):
-    permission_classes = [IsAuthenticated]
     pagination_class = StandardResultsSetPagination()
 
     def get(self, request, application_id):
@@ -95,6 +94,49 @@ class ApplicationCommentListView(APIView):
         content_type = ContentType.objects.get_for_model(Application)
         comments = Comment.objects.filter(
             content_type=content_type, object_id=application.id
+        ).order_by('-created_at')
+
+        page = self.pagination_class.paginate_queryset(comments, request)
+        if page is not None:
+            serializer = CommentSerializer(page, many=True)
+            return self.pagination_class.get_paginated_response(serializer.data)
+
+        serializer = CommentSerializer(comments, many=True)
+        return Response(serializer.data)
+
+
+class BlogPostCommentCreateView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, post_id):
+        try:
+            # Get the BlogPost object
+            post = get_object_or_404(BlogPost, id=post_id)
+            
+            content_type = ContentType.objects.get_for_model(BlogPost)
+            comment_data = {
+                'content_type': content_type.id,
+                'object_id': post.id,
+                'text': request.data.get('comment'),
+            }
+
+            serializer = CommentSerializer(data=comment_data)
+            if serializer.is_valid():
+                serializer.save(user=request.user)
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        except BlogPost.DoesNotExist:
+            return Response({'error': 'Blog post does not exist.'}, status=status.HTTP_404_NOT_FOUND)
+
+class BlogPostCommentListView(APIView):
+    pagination_class = PageNumberPagination()
+
+    def get(self, request, post_id):
+        post = get_object_or_404(BlogPost, id=post_id)
+        content_type = ContentType.objects.get_for_model(BlogPost)
+        comments = Comment.objects.filter(
+            content_type=content_type, object_id=post.id
         ).order_by('-created_at')
 
         page = self.pagination_class.paginate_queryset(comments, request)

@@ -27,6 +27,7 @@ urlpatterns = [
     path('api/',include('notifications.urls')),
     path('api/',include('comments.urls')),
     path('api/',include('blogs.urls')),
+    path('api/',include('likes.urls')),
 ]
 # Add static files to urlpatterns
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
