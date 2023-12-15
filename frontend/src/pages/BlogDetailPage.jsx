@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import Header from '../components/Layout/Header';
 import blogData from './blogData.json'; // Adjust path as necessary
+import LikeButton from '../components/Likes/LikeButton';
 
 const BlogDetailPage = () => {
     const { blogId } = useParams();
@@ -22,6 +23,7 @@ const BlogDetailPage = () => {
                     <Header title="Blog post not found" subtitle="The requested blog post could not be found." />
                 )}
             </div>
+            <LikeButton postId={blogId}/>
         </div>
     );
 };
