@@ -8,3 +8,7 @@ django-extensions
 django-filter
 shortuuid
 django-cors-headers
+dj_database_url
+python-dotenv
+psycopg2-binary
+gunicorn
