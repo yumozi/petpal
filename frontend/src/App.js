@@ -27,6 +27,8 @@ import SeekerDetailPage from './pages/SeekerDetailPage';
 import ShelterListPage from './pages/ShelterListPage';
 import SeekerUpdatePage from './pages/SeekerUpdatePage';
 import ApplicationUpdatePage from './pages/ApplicationUpdatePage';
+import CreateBlogPage from './pages/CreateBlogPage';
+import ShelterBlogList from './pages/ShelterBlogList';
 
 
 function App() {
@@ -84,7 +86,8 @@ function App() {
             <Route path="404" element={<PageNotFound/>} />
             <Route path="notifications" element={<NotificationPage />} />
             <Route path="blog" element={<BlogPage/>} />
-            <Route path="blog" element={<BlogPage/>} />
+            <Route path='shelter/:shelterId/blog/create' element={<CreateBlogPage/>} />
+            <Route path="shelter/:shelterId/blogs/" element={<ShelterBlogList/>} />
             <Route path="blog/:blogId" element={<BlogDetailPage/>} />
             <Route path="*" element={<PageNotFound/>} />
           </Route>
