@@ -26,6 +26,9 @@ import NotificationPage from './pages/NotificationPage';
 import SeekerDetailPage from './pages/SeekerDetailPage';
 import ShelterListPage from './pages/ShelterListPage';
 import SeekerUpdatePage from './pages/SeekerUpdatePage';
+import ApplicationUpdatePage from './pages/ApplicationUpdatePage';
+import CreateBlogPage from './pages/CreateBlogPage';
+import ShelterBlogList from './pages/ShelterBlogList';
 
 
 function App() {
@@ -66,6 +69,7 @@ function App() {
             <Route path="pet/:id" element={<PetDetailPage />} />
             <Route path="shelter/:id" element={<ShelterDetailPage />} />
             <Route path="applications/:id" element={<ApplicationDetailPage />} />
+            <Route path="applications/:id/update" element={<ApplicationUpdatePage />} />
             <Route path="applications" element={<ApplicationList />} />
             <Route path="shelters" element={<ShelterListPage />} />
             <Route path="seeker/" element={<SeekerDetailPage />} />
@@ -82,7 +86,8 @@ function App() {
             <Route path="404" element={<PageNotFound/>} />
             <Route path="notifications" element={<NotificationPage />} />
             <Route path="blog" element={<BlogPage/>} />
-            <Route path="blog" element={<BlogPage/>} />
+            <Route path='shelter/:shelterId/blog/create' element={<CreateBlogPage/>} />
+            <Route path="shelter/:shelterId/blogs/" element={<ShelterBlogList/>} />
             <Route path="blog/:blogId" element={<BlogDetailPage/>} />
             <Route path="*" element={<PageNotFound/>} />
           </Route>

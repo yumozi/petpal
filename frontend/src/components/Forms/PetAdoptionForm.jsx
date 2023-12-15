@@ -43,10 +43,14 @@ function PetAdoptionForm() {
         event.preventDefault();
         const reason = event.target.elements.reason.value;
         const about = event.target.elements.about.value;
-        const pet_history = event.target.elements.pethistory.value;
+        const pet_history = event.target.elements.pet_history.value;
         const api = `${process.env.REACT_APP_SERVER}/api/pet/${id}/application/`;
     
         try {
+            var form = JSON.stringify({ reason: reason,
+                previous_pets: about,
+                previous_experience: pet_history})
+            console.log("Form: ", form)
             const response = await fetch(api, {
                 method: "POST",
                 body: JSON.stringify({
@@ -59,14 +63,27 @@ function PetAdoptionForm() {
                     'Authorization': `Bearer ${token}`
                 }
             });
+            // Print out the reason, about and pet history into the console
+            // console.log("Reason: ", reason);
+            // console.log("About: ", about);
+            // console.log("Pet History: ", pet_history);
+            // var form = JSON.stringify({ reason: reason,
+            //     previous_pets: about,
+            //     previous_experience: pet_history})
+            // console.log("Form: ", form)
     
             if (!response.ok) {
-                throw new Error(`${response.status}: ${response.statusText}`);
+                console.error("Error submitting application: ", response.data.error);
             }
             console.log("Pet adoption application submitted successfully");
             navigate('/search');
         } catch (error) {
-            console.error("Error submitting application: ", error.message);
+            // console.error("Error submitting application: ", error.message);
+            if(error.response){
+                if (error.response.status == 400){
+                    console.error("Error submitting application: ", error.response.data.error);
+                }
+            }
         }
     };
     
@@ -114,9 +131,9 @@ function PetAdoptionForm() {
                 <div className="flex items-center gap-x-3">
                     <input
                         id="pet-current"
-                        name="pethistory"
+                        name="pet_history"
                         type="radio"
-                        className="h-4 w-4 border-gray-300 text-gray-600 focus:ring-gray-600"
+                        className="h-4 w-4 border-gray-300 text-gray-600 focus:ring-gray-600" value="Currently have other pets."
                     />
                     <label htmlFor="pet-current" className="block text-sm font-medium leading-6 text-gray-900">
                         Currently have other pets.
@@ -125,9 +142,9 @@ function PetAdoptionForm() {
                 <div className="flex items-center gap-x-3">
                     <input
                         id="pet-past"
-                        name="pethistory"
+                        name="pet_history"
                         type="radio"
-                        className="h-4 w-4 border-gray-300 text-gray-600 focus:ring-gray-600"
+                        className="h-4 w-4 border-gray-300 text-gray-600 focus:ring-gray-600" value="Had pets growing up."
                     />
                     <label htmlFor="pet-past" className="block text-sm font-medium leading-6 text-gray-900">
                         Had pets growing up.
@@ -136,9 +153,9 @@ function PetAdoptionForm() {
                 <div className="flex items-center gap-x-3">
                     <input
                         id="first-time"
-                        name="pethistory"
+                        name="pet_history"
                         type="radio"
-                        className="h-4 w-4 border-gray-300 text-gray-600 focus:ring-gray-600"
+                        className="h-4 w-4 border-gray-300 text-gray-600 focus:ring-gray-600" value="First-time pet owner"
                     />
                     <label htmlFor="first-time" className="block text-sm font-medium leading-6 text-gray-900">
                         First-time pet owner.
